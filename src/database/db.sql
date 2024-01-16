@@ -7,4 +7,10 @@ CREATE TABLE articulos (
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+create table if not exists proveedores (
+	id int auto_increment primary key,
+    nombre varchar(50) not null,
+    telefono char(9) not null
+    );
+
 -- ALTER TABLE articulos ADD COLUMN imagen VARCHAR(200) AFTER descripcion;

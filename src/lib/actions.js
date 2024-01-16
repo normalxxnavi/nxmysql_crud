@@ -6,10 +6,10 @@ import { redirect } from 'next/navigation';
 export async function getArticulos() {
   try {
     const results = await db.query('select * from articulos');
-    // console.log(results);
+    console.log(results);
     return results;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);  
     return null;    
   }
 }
@@ -57,4 +57,57 @@ export async function deleteArticulo(formData) {
     console.log(error);
   }
   redirect('/articulos');
+}
+
+export async function getProveedores() {
+  try {
+    const results = await db.query('select * from proveedores');
+    console.log(results);
+    return results;
+  } catch (error) {
+    console.log(error);  
+    return null;    
+  }
+}
+
+export async function newProveedor(formData) {
+  try {
+    const nombre = formData.get('nombre');
+    const telefono = formData.get('telefono');
+
+    const query = 'insert into proveedores(nombre,telefono) values (?, ?)';
+    const results = await db.query(query, [nombre, telefono]);
+    console.log(results);
+  } catch (error) {
+    console.log(error);
+  }
+  redirect('/proveedores');
+}
+
+export async function editProveedores(formData) {
+  const id = formData.get('id')
+  const nombre = formData.get('nombre');
+  const telefono = formData.get('telefono');
+
+  try {
+    const query = 'update proveedores set ? where id = ? ';
+    const results = await db.query(query, [{nombre, telefono}, id]);
+    console.log(results);
+  } catch (error) {
+    console.log(error);
+  }
+  redirect('/proveedores');
+}
+
+export async function deleteProveedores(formData) {
+  try {
+    const id = formData.get('id');
+
+    const query = 'delete from proveedores where id = ?';
+    const results = await db.query(query, [id]);
+    console.log(results);
+  } catch (error) {
+    console.log(error);
+  }
+  redirect('/proveedores');
 }
